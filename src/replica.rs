@@ -4,7 +4,9 @@ use std::rc::Rc;
 use crate::task::TaskData;
 use crate::{DependencyMap, Operation, Task, WorkingSet};
 use pyo3::prelude::*;
-use taskchampion::{Operations as TCOperations, Replica as TCReplica, StorageConfig, Uuid};
+use taskchampion::{
+    server::AwsCredentials, Operations as TCOperations, Replica as TCReplica, StorageConfig, Uuid,
+};
 
 #[pyclass]
 /// A replica represents an instance of a user's task data, providing an easy interface
@@ -106,6 +108,27 @@ impl Replica {
             .0
             .get_task_data(Uuid::parse_str(&uuid)?)
             .map(|opt| opt.map(TaskData))?)
+    }
+
+    pub fn sync_to_aws(
+        &mut self,
+        region: String,
+        bucket: String,
+        access_key_id: String,
+        secret_access_key: String,
+        avoid_snapshots: bool,
+    ) -> anyhow::Result<()> {
+        let mut server = taskchampion::ServerConfig::Aws {
+            region,
+            bucket,
+            credentials: AwsCredentials::AccessKey {
+                access_key_id,
+                secret_access_key,
+            },
+            encryption_secret: Default::default(),
+        }
+        .into_server()?;
+        self.0.sync(&mut server, avoid_snapshots).map_err(anyhow::Error::from)
     }
 
     pub fn sync(&self, _avoid_snapshots: bool) {

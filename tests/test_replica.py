@@ -136,3 +136,17 @@ def test_num_undo_points(replica_with_tasks: Replica):
 @pytest.mark.skip("Skipping as gotta actually polish it")
 def test_dependency_map(replica_with_tasks: Replica):
     assert replica_with_tasks.dependency_map(False) is not None
+
+
+def test_sync_to_aws(empty_replica: Replica):
+    # This is a mock test that the function is callable.
+    # It does not test that the sync actually works.
+    try:
+        empty_replica.sync_to_aws(
+            "us-west-2", "my-bucket", "access-key-id", "secret-access-key", False
+        )
+    except RuntimeError as e:
+        # A runtime error is expected since we are not using real credentials
+        # and there's no AWS service to connect to.
+        # The important thing is that the call doesn't crash.
+        assert "PermanentRedirect" in str(e)
