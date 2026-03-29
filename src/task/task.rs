@@ -75,10 +75,12 @@ impl Task {
     }
 
     pub fn get_uda(&self, namespace: &str, key: &str) -> Option<&str> {
+        #[allow(deprecated)]
         self.0.get_uda(namespace, key)
     }
 
     pub fn get_udas(&self) -> Vec<((&str, &str), &str)> {
+        #[allow(deprecated)]
         self.0.get_udas().collect()
     }
 
@@ -210,6 +212,7 @@ impl Task {
         value: String,
         ops: &mut Operations,
     ) -> PyResult<()> {
+        #[allow(deprecated)]
         self.0
             .set_uda(namespace, key, value, ops.as_mut())
             .map_err(into_runtime_error)
@@ -221,6 +224,7 @@ impl Task {
         key: String,
         ops: &mut Operations,
     ) -> PyResult<()> {
+        #[allow(deprecated)]
         self.0
             .remove_uda(namespace, key, ops.as_mut())
             .map_err(into_runtime_error)
@@ -232,12 +236,14 @@ impl Task {
         value: String,
         ops: &mut Operations,
     ) -> PyResult<()> {
+        #[allow(deprecated)]
         self.0
             .set_legacy_uda(key, value, ops.as_mut())
             .map_err(into_runtime_error)
     }
 
     pub fn remove_legacy_uda(&mut self, key: String, ops: &mut Operations) -> PyResult<()> {
+        #[allow(deprecated)]
         self.0
             .remove_legacy_uda(key, ops.as_mut())
             .map_err(into_runtime_error)

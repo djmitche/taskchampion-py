@@ -3,7 +3,7 @@ name = "taskchampion-py"
 version = "2.0.2"
 edition = "2021"
 # This should match the MSRV of the `taskchampion` crate.
-rust-version = "1.83.0"
+rust-version = "1.88.0"
 
 [features]
 default = ["sync"]
@@ -26,4 +26,5 @@ doc = false
 [dependencies]
 pyo3 = { version = "0.29", features = ["chrono"] }
 chrono = "*"
-taskchampion = { version = "=2.0.2", default-features = false, features = ["bundled"] }
+taskchampion = { version = "=3.0.1", default-features = false, features = ["bundled", "tls-webpki-roots", "storage-sqlite", "server-local"] }
+tokio = { version = "1", features = ["rt", "rt-multi-thread"] }

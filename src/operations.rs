@@ -22,7 +22,7 @@ impl Operations {
     }
 
     pub fn __repr__(&self) -> String {
-        format!("{:?}", self)
+        format!("{self:?}")
     }
 
     pub fn __len__(&self) -> usize {

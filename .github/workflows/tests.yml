@@ -27,7 +27,7 @@ jobs:
 
       - uses: actions-rs/toolchain@v1
         with:
-          toolchain: "1.83.0" # MSRV
+          toolchain: "1.88.0" # MSRV
           override: true
           components: clippy
 
@@ -69,7 +69,7 @@ jobs:
 
       - uses: actions-rs/toolchain@v1
         with:
-          toolchain: "1.83.0" # MSRV
+          toolchain: "1.88.0" # MSRV
           override: true
           components: clippy
 
